@@ -86,24 +86,24 @@ void GPIO_voidSetPinValue(u8 Copy_u8PortID, u8 Copy_u8PinID, u8 Copy_u8Value)
 			case GPIO_U8_PORTA:
 				switch (Copy_u8Value)
 				{
-					case GPIO_U8_HIGH:	SET_BIT(GPIOA_ODR,Copy_u8PinID);	break;
-					case GPIO_U8_LOW:	CLR_BIT(GPIOA_ODR,Copy_u8PinID);	break;
+					case GPIO_U8_HIGH:	GPIOA_BSRR=(1<<Copy_u8PinID);	break;
+					case GPIO_U8_LOW:	GPIOA_BRR=(1<<Copy_u8PinID);	break;
 					default: /* Error */ break;
 				}
 			break;
 			case GPIO_U8_PORTB:
 				switch (Copy_u8Value)
 				{
-					case GPIO_U8_HIGH:	SET_BIT(GPIOB_ODR,Copy_u8PinID);	break;
-					case GPIO_U8_LOW:	CLR_BIT(GPIOB_ODR,Copy_u8PinID);	break;
+					case GPIO_U8_HIGH:	GPIOB_BSRR=(1<<Copy_u8PinID);	break;
+					case GPIO_U8_LOW:	GPIOB_BRR=(1<<Copy_u8PinID);	break;
 					default: /* Error */ break;
 				}
 			break;
 			case GPIO_U8_PORTC:
 				switch (Copy_u8Value)
 				{
-					case GPIO_U8_HIGH:	SET_BIT(GPIOC_ODR,Copy_u8PinID);	break;
-					case GPIO_U8_LOW:	CLR_BIT(GPIOC_ODR,Copy_u8PinID);	break;
+					case GPIO_U8_HIGH:	GPIOC_BSRR=(1<<Copy_u8PinID);	break;
+					case GPIO_U8_LOW:	GPIOC_BRR=(1<<Copy_u8PinID);	break;
 					default: /* Error */ break;
 				}
 			break;
