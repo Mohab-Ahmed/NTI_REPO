@@ -131,3 +131,22 @@ u8 GPIO_u8GetPinValue(u8 Copy_u8PortID, u8 Copy_u8PinID)
 	}
 	return Local_u8Value;
 }
+
+void GPIO_voidSetPortDirection(u8 Copy_u8PortID, u8 Copy_u8Mode)
+{
+	u8 Local_u8Pins=0;
+	for (Local_u8Pins = 0; Local_u8Pins < 16; Local_u8Pins++)
+	{
+		GPIO_voidSetPinDirection(Copy_u8PortID, Local_u8Pins, Copy_u8Mode);
+	}
+}
+
+void GPIO_voidSetPortValue(u8 Copy_u8PortID, u8 Copy_u8Value)
+{
+	u8 Local_u8Pins=0;
+	for (Local_u8Pins = 0; Local_u8Pins < 16; Local_u8Pins++)
+	{
+		GPIO_voidSetPinValue(Copy_u8PortID, Local_u8Pins, Copy_u8Value);
+	}
+}
+

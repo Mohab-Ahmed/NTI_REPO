@@ -63,5 +63,8 @@ void GPIO_voidSetPinValue(u8 Copy_u8PortID, u8 Copy_u8PinID, u8 Copy_u8Value);
 u8 GPIO_u8GetPinValue(u8 Copy_u8PortID, u8 Copy_u8PinID);
 
 /* SET PORT DIRECTION */
+void GPIO_voidSetPortDirection(u8 Copy_u8PortID, u8 Copy_u8Mode);
 /* SET PORT VALUE */
+void GPIO_voidSetPortValue(u8 Copy_u8PortID, u8 Copy_u8Value);
+
 #endif /* GPIO_INTERFACE_H_ */
