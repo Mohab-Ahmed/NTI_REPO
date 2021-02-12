@@ -9,7 +9,7 @@
 #ifndef SEG_CONFIG_H_
 #define SEG_CONFIG_H_
 
-#define SEG_MODE 				SEG_MULTIPLEXING				/* Choose from :
+#define SEG_MODE 				SEG_SINGLE				/* Choose from :
 															SEG_SINGLE
 															SEG_MULTIPLEXING */
 
@@ -33,30 +33,30 @@
 															SEG_CATH
 															SEG_ANOD */
 
-#define SEG_1_START_PIN  		GPIO_ENUM_PIN1
-#define SEG_2_START_PIN  		GPIO_ENUM_PIN1			/* Choose from :
-															GPIO_ENUM_PIN0
-															GPIO_ENUM_PIN1
-															GPIO_ENUM_PIN2
-															GPIO_ENUM_PIN3
-															GPIO_ENUM_PIN4
-															GPIO_ENUM_PIN5
-															GPIO_ENUM_PIN6
-															GPIO_ENUM_PIN7
-															GPIO_ENUM_PIN8
-															GPIO_ENUM_PIN9
-															GPIO_ENUM_PIN10
-															GPIO_ENUM_PIN11
-															GPIO_ENUM_PIN12
-															GPIO_ENUM_PIN13
-															GPIO_ENUM_PIN14
-															GPIO_ENUM_PIN15 */
+#define SEG_1_START_PIN  		1
+#define SEG_2_START_PIN  		1						/* Choose from :
+															0
+															1
+															2
+															3
+															4
+															5
+															6
+															7
+															8
+															9
+															10
+															11
+															12
+															13
+															14
+															15 	   */
+
+
 
 #elif (SEG_MODE==SEG_MULTIPLEXING)
 
-#define SEG_1_PORT 				GPIO_ENUM_PORTA
-#define SEG_1_EN1_PORT 			GPIO_ENUM_PORTB
-#define SEG_1_EN2_PORT 			GPIO_ENUM_PORTB			/* Choose from :
+#define SEG_1_PORT 				GPIO_ENUM_PORTA			/* Choose from :
 															GPIO_ENUM_PORTA
 															GPIO_ENUM_PORTB */
 
@@ -64,25 +64,44 @@
 															SEG_CATH
 															SEG_ANOD */
 
-#define SEG_1_START_PIN  		GPIO_ENUM_PIN1
-#define SEG_1_EN1  				GPIO_ENUM_PIN12
-#define SEG_1_EN2  				GPIO_ENUM_PIN13			/* Choose from :
-															GPIO_ENUM_PIN0
-															GPIO_ENUM_PIN1
-															GPIO_ENUM_PIN2
-															GPIO_ENUM_PIN3
-															GPIO_ENUM_PIN4
-															GPIO_ENUM_PIN5
-															GPIO_ENUM_PIN6
-															GPIO_ENUM_PIN7
-															GPIO_ENUM_PIN8
-															GPIO_ENUM_PIN9
-															GPIO_ENUM_PIN10
-															GPIO_ENUM_PIN11
-															GPIO_ENUM_PIN12
-															GPIO_ENUM_PIN13
-															GPIO_ENUM_PIN14
-															GPIO_ENUM_PIN15 */
+#define SEG_1_START_PIN  		1						/* Choose from :
+															0
+															1
+															2
+															3
+															4
+															5
+															6
+															7
+															8
+															9
+															10
+															11
+															12
+															13
+															14
+															15 	   */
+
+#define SEG_1_EN1  				GPIO_ENUM_PINB12
+#define SEG_1_EN2  				GPIO_ENUM_PINB13
+
+/* Choose from : for PORT A PINs        Choose from : for PORT B PINs        Choose from : for PORT B PINs
+		GPIO_ENUM_PINA0                 	GPIO_ENUM_PINB0                  	 GPIO_ENUM_PINB13
+		GPIO_ENUM_PINA1                 	GPIO_ENUM_PINB1                  	 GPIO_ENUM_PINB14
+		GPIO_ENUM_PINA2                 	GPIO_ENUM_PINB2                  	 GPIO_ENUM_PINB15
+		GPIO_ENUM_PINA3                 	GPIO_ENUM_PINB3
+		GPIO_ENUM_PINA4                 	GPIO_ENUM_PINB4
+		GPIO_ENUM_PINA5                 	GPIO_ENUM_PINB5
+		GPIO_ENUM_PINA6                 	GPIO_ENUM_PINB6
+		GPIO_ENUM_PINA7                 	GPIO_ENUM_PINB7
+		GPIO_ENUM_PINA8                 	GPIO_ENUM_PINB8
+		GPIO_ENUM_PINA9                 	GPIO_ENUM_PINB9
+		GPIO_ENUM_PINA10                	GPIO_ENUM_PINB10
+		GPIO_ENUM_PINA11                	GPIO_ENUM_PINB11
+		GPIO_ENUM_PINA12                	GPIO_ENUM_PINB12
+		GPIO_ENUM_PINA13                	GPIO_ENUM_PINB13
+		GPIO_ENUM_PINA14                	GPIO_ENUM_PINB14
+		GPIO_ENUM_PINA15 	            	GPIO_ENUM_PINB15 	*/
 
 #endif
 
