@@ -18,22 +18,44 @@ typedef enum{
 
 /* GPIO PINS ENUM */
 typedef enum{
-	GPIO_ENUM_PIN0=0,
-	GPIO_ENUM_PIN1,
-	GPIO_ENUM_PIN2,
-	GPIO_ENUM_PIN3,
-	GPIO_ENUM_PIN4,
-	GPIO_ENUM_PIN5,
-	GPIO_ENUM_PIN6,
-	GPIO_ENUM_PIN7,
-	GPIO_ENUM_PIN8,
-	GPIO_ENUM_PIN9,
-	GPIO_ENUM_PIN10,
-	GPIO_ENUM_PIN11,
-	GPIO_ENUM_PIN12,
-	GPIO_ENUM_PIN13,
-	GPIO_ENUM_PIN14,
-	GPIO_ENUM_PIN15,
+	/* PORT A */
+	GPIO_ENUM_PINA0=0,
+	GPIO_ENUM_PINA1,
+	GPIO_ENUM_PINA2,
+	GPIO_ENUM_PINA3,
+	GPIO_ENUM_PINA4,
+	GPIO_ENUM_PINA5,
+	GPIO_ENUM_PINA6,
+	GPIO_ENUM_PINA7,
+	GPIO_ENUM_PINA8,
+	GPIO_ENUM_PINA9,
+	GPIO_ENUM_PINA10,
+	GPIO_ENUM_PINA11,
+	GPIO_ENUM_PINA12,
+	GPIO_ENUM_PINA13,
+	GPIO_ENUM_PINA14,
+	GPIO_ENUM_PINA15,
+	/* PORT B */
+	GPIO_ENUM_PINB0,
+	GPIO_ENUM_PINB1,
+	GPIO_ENUM_PINB2_WARNING,		/* Reset PIN */
+	GPIO_ENUM_PINB3_WARNING,		/* Debug PIN */
+	GPIO_ENUM_PINB4_WARNING,		/* Debug PIN */
+	GPIO_ENUM_PINB5,
+	GPIO_ENUM_PINB6,
+	GPIO_ENUM_PINB7,
+	GPIO_ENUM_PINB8,
+	GPIO_ENUM_PINB9,
+	GPIO_ENUM_PINB10,
+	GPIO_ENUM_PINB11,
+	GPIO_ENUM_PINB12,
+	GPIO_ENUM_PINB13,
+	GPIO_ENUM_PINB14,
+	GPIO_ENUM_PINB15,
+	/* PORT C */
+	GPIO_ENUM_PINC13=45,
+	GPIO_ENUM_PINC14,
+	GPIO_ENUM_PINC15,
 	GPIO_ENUM_TOTAL_PINS
 }GPIO_EnumPin_type;
 
@@ -69,13 +91,16 @@ typedef enum{
 	GPIO_ENUM_LOW=0
 }GPIO_EnumPinValue_type;
 
-void GPIO_voidSetPinDirection(GPIO_EnumPort_type Copy_EnumPortID, GPIO_EnumPin_type Copy_EnumPinID, GPIO_EnumPinMode_type Copy_EnumMode);
-void GPIO_voidSetPinValue(GPIO_EnumPort_type Copy_EnumPortID, GPIO_EnumPin_type Copy_EnumPinID, GPIO_EnumPinMode_type Copy_EnumValue);
-u8 GPIO_u8GetPinValue(GPIO_EnumPort_type Copy_EnumPortID, GPIO_EnumPin_type Copy_EnumPinID);
+void GPIO_voidSetPinDirection(GPIO_EnumPin_type Copy_EnumPinID, GPIO_EnumPinMode_type Copy_EnumMode);
+void GPIO_voidSetPinValue(GPIO_EnumPin_type Copy_EnumPinID, GPIO_EnumPinValue_type Copy_EnumValue);
+u8 GPIO_u8GetPinValue(GPIO_EnumPin_type Copy_EnumPinID);
 
 /* SET PORT DIRECTION */
 void GPIO_voidSetPortDirection(GPIO_EnumPort_type Copy_EnumPortID, GPIO_EnumPinMode_type Copy_EnumMode);
-/* SET PORT VALUE */
-void GPIO_voidSetPortValue(GPIO_EnumPort_type Copy_EnumPortID, GPIO_EnumPinMode_type Copy_EnumValue);
+/* SET PORT VALUE by writing the given value to the BSRR hence 0 has no effect*/
+void GPIO_voidSETPortValue(GPIO_EnumPort_type Copy_EnumPortID, u16 Copy_u16Value);
+
+/* Clear PORT VALUE by writing the given value to the BRR hence 0 has no effect*/
+void GPIO_voidCLRPortValue(GPIO_EnumPort_type Copy_EnumPortID, u16 Copy_u16Value);
 
 #endif /* GPIO_INTERFACE_H_ */

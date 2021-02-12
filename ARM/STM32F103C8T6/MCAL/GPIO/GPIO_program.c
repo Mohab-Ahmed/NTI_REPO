@@ -5,20 +5,21 @@
  *      Author: mohab
  */
 
-#include "STDTYPES.h"
 #include "BIT_MATH.h"
-
-#include "GPIO_private.h"
+#include "STDTYPES.h"
 #include "GPIO_config.h"
 #include "GPIO_interface.h"
+#include "GPIO_private.h"
 
 
-void GPIO_voidSetPinDirection(GPIO_EnumPort_type Copy_EnumPortID, GPIO_EnumPin_type Copy_EnumPinID, GPIO_EnumPinMode_type Copy_EnumMode)
+void GPIO_voidSetPinDirection(GPIO_EnumPin_type Copy_EnumPinID, GPIO_EnumPinMode_type Copy_EnumMode)
 {
 	/* Range Check */
-	if ( (Copy_EnumPortID<GPIO_ENUM_TOTAL_PORTS) && (Copy_EnumPinID<GPIO_ENUM_TOTAL_PINS) )
+	if ( Copy_EnumPinID<GPIO_ENUM_TOTAL_PINS )
 	{
-		switch (Copy_EnumPortID)
+		GPIO_EnumPort_type Local_EnumPortID=GPIO_ENUM_PORTA+(Copy_EnumPinID/16);
+		Copy_EnumPinID%=16;
+		switch (Local_EnumPortID)
 		{
 		case GPIO_ENUM_PORTA:
 			/* LOW PORT */
@@ -77,19 +78,20 @@ void GPIO_voidSetPinDirection(GPIO_EnumPort_type Copy_EnumPortID, GPIO_EnumPin_t
 	}
 }
 
-void GPIO_voidSetPinValue(GPIO_EnumPort_type Copy_EnumPortID, GPIO_EnumPin_type Copy_EnumPinID, GPIO_EnumPinMode_type Copy_EnumValue)
+void GPIO_voidSetPinValue(GPIO_EnumPin_type Copy_EnumPinID, GPIO_EnumPinValue_type Copy_EnumValue)
 {
 	/* Range Check */
-	if ( (Copy_EnumPortID<GPIO_ENUM_TOTAL_PORTS) && (Copy_EnumPinID<GPIO_ENUM_TOTAL_PINS) )
+	if ( Copy_EnumPinID<GPIO_ENUM_TOTAL_PINS )
 	{
-		switch (Copy_EnumPortID)
+		GPIO_EnumPort_type Local_EnumPortID=GPIO_ENUM_PORTA+(Copy_EnumPinID/16);
+		Copy_EnumPinID%=16;
+		switch (Local_EnumPortID)
 		{
 			case GPIO_ENUM_PORTA:
 				switch (Copy_EnumValue)
 				{
 					case GPIO_ENUM_HIGH:	GPIOA_BSRR=(1<<Copy_EnumPinID);	break;
 					case GPIO_ENUM_LOW:		GPIOA_BRR=(1<<Copy_EnumPinID);	break;
-					default: /* Error */ break;
 				}
 			break;
 			case GPIO_ENUM_PORTB:
@@ -97,7 +99,6 @@ void GPIO_voidSetPinValue(GPIO_EnumPort_type Copy_EnumPortID, GPIO_EnumPin_type 
 				{
 					case GPIO_ENUM_HIGH:	GPIOB_BSRR=(1<<Copy_EnumPinID);	break;
 					case GPIO_ENUM_LOW:		GPIOB_BRR=(1<<Copy_EnumPinID);	break;
-					default: /* Error */ break;
 				}
 			break;
 			case GPIO_ENUM_PORTC:
@@ -105,7 +106,6 @@ void GPIO_voidSetPinValue(GPIO_EnumPort_type Copy_EnumPortID, GPIO_EnumPin_type 
 				{
 					case GPIO_ENUM_HIGH:	GPIOC_BSRR=(1<<Copy_EnumPinID);	break;
 					case GPIO_ENUM_LOW:		GPIOC_BRR=(1<<Copy_EnumPinID);	break;
-					default: /* Error */ break;
 				}
 			break;
 			default: /* Error */ break;
@@ -113,14 +113,16 @@ void GPIO_voidSetPinValue(GPIO_EnumPort_type Copy_EnumPortID, GPIO_EnumPin_type 
 	}
 }
 
-u8 GPIO_u8GetPinValue(GPIO_EnumPort_type Copy_EnumPortID, GPIO_EnumPin_type Copy_EnumPinID)
+u8 GPIO_u8GetPinValue(GPIO_EnumPin_type Copy_EnumPinID)
 {
 	/* Local value to return the answer and init it to anything but ur answers */
 	u8 Local_u8Value=5;
 	/* Range Check */
-	if ( (Copy_EnumPortID<GPIO_ENUM_TOTAL_PORTS) && (Copy_EnumPinID<GPIO_ENUM_TOTAL_PINS) )
+	if ( Copy_EnumPinID<GPIO_ENUM_TOTAL_PINS )
 	{
-		switch (Copy_EnumPortID)
+		GPIO_EnumPort_type Local_EnumPortID=GPIO_ENUM_PORTA+(Copy_EnumPinID/16);
+		Copy_EnumPinID%=16;
+		switch (Local_EnumPortID)
 		{
 			case GPIO_ENUM_PORTA:	Local_u8Value=GET_BIT(GPIOA_IDR,Copy_EnumPinID);	break;
 			case GPIO_ENUM_PORTB:	Local_u8Value=GET_BIT(GPIOB_IDR,Copy_EnumPinID);	break;
@@ -137,18 +139,52 @@ u8 GPIO_u8GetPinValue(GPIO_EnumPort_type Copy_EnumPortID, GPIO_EnumPin_type Copy
 
 void GPIO_voidSetPortDirection(GPIO_EnumPort_type Copy_EnumPortID, GPIO_EnumPinMode_type Copy_EnumMode)
 {
-	GPIO_EnumPin_type Local_EnumPin=GPIO_ENUM_PIN0;
-	for ( ; Local_EnumPin < GPIO_ENUM_TOTAL_PINS; Local_EnumPin++)
+	/* Range Check */
+	if ( Copy_EnumPortID<GPIO_ENUM_TOTAL_PORTS )
 	{
-		GPIO_voidSetPinDirection(Copy_EnumPortID, Local_EnumPin, Copy_EnumMode);
+		GPIO_EnumPin_type Local_EnumPin=(GPIO_PORT_PINS*Copy_EnumPortID);
+		u8 Local_u8PinMax=(Local_EnumPin+GPIO_PORT_PINS);
+		for ( ; Local_EnumPin < Local_u8PinMax; Local_EnumPin++)
+		{
+			GPIO_voidSetPinDirection(Local_EnumPin, Copy_EnumMode);
+		}
 	}
 }
 
-void GPIO_voidSetPortValue(GPIO_EnumPort_type Copy_EnumPortID, GPIO_EnumPinMode_type Copy_EnumValue)
+void GPIO_voidSETPortValue(GPIO_EnumPort_type Copy_EnumPortID, u16 Copy_u16Value)
 {
-	GPIO_EnumPin_type Local_EnumPin=0;
-	for ( ; Local_EnumPin < GPIO_ENUM_TOTAL_PINS; Local_EnumPin++)
+	/* Range Check */
+	if (Copy_EnumPortID<GPIO_ENUM_TOTAL_PORTS)
 	{
-		GPIO_voidSetPinValue(Copy_EnumPortID, Local_EnumPin, Copy_EnumValue);
+		switch (Copy_EnumPortID)
+		{
+			case GPIO_ENUM_PORTA:	GPIOA_BSRR=Copy_u16Value;	break;
+			case GPIO_ENUM_PORTB:	GPIOB_BSRR=Copy_u16Value;	break;
+			case GPIO_ENUM_PORTC:	GPIOC_BSRR=Copy_u16Value;	break;
+			default: /* Error */ break;
+		}
+	}
+	else
+	{
+		/* Error */
+	}
+}
+
+void GPIO_voidCLRPortValue(GPIO_EnumPort_type Copy_EnumPortID, u16 Copy_u16Value)
+{
+	/* Range Check */
+	if (Copy_EnumPortID<GPIO_ENUM_TOTAL_PORTS)
+	{
+		switch (Copy_EnumPortID)
+		{
+			case GPIO_ENUM_PORTA:	GPIOA_BRR=Copy_u16Value;	break;
+			case GPIO_ENUM_PORTB:	GPIOB_BRR=Copy_u16Value;	break;
+			case GPIO_ENUM_PORTC:	GPIOC_BRR=Copy_u16Value;	break;
+			default: /* Error */ break;
+		}
+	}
+	else
+	{
+		/* Error */
 	}
 }

@@ -40,4 +40,6 @@
 #define GPIOC_BRR 				(*(volatile u32*)(GPIOC_BASE_ADD + 0x14 ))
 #define GPIOC_LCKR 				(*(volatile u32*)(GPIOC_BASE_ADD + 0x18 ))
 
+#define GPIO_PORT_PINS 			16			/* To be used in set port direction */
+
 #endif /* GPIO_PRIVATE_H_ */
