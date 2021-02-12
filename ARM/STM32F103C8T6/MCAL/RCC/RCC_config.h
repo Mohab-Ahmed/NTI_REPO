@@ -8,18 +8,18 @@
 #ifndef RCC_CONFIG_H_
 #define RCC_CONFIG_H_
 
-#define CLK_TYPE 				RCC_HSI					 /* Choose from :
+#define CLK_TYPE 				RCC_HSE					 /* Choose from :
 															RCC_HSI
 															RCC_HSE
 															RCC_PLL */
 
 #if (CLK_TYPE==RCC_HSE)
-#define RCC_HSE_SOURCE 			RCC_RC					 /* Choose from :
+#define RCC_HSE_SOURCE 			RCC_CRYSTAL				/* Choose from :
 															RCC_RC
 															RCC_CRYSTAL */
 
 #elif (CLK_TYPE==RCC_PLL)
-#define RCC_PLL_SOURCE 			RCC_HSE_FULL	 /* Choose from :
+#define RCC_PLL_SOURCE 			RCC_HSE_FULL	 		/* Choose from :
 															 RCC_HSI_DIVIDED_BY_2
 															 RCC_HSE_DIVIDED_BY_2
 															 RCC_HSE_FULL */
